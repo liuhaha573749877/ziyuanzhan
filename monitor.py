@@ -36,9 +36,10 @@ HEADERS = {
 def fetch_resources_from_api() -> list[dict]:
     """通过 ziyuanzu.com API 获取资源站列表"""
     try:
-        resp = requests.get(f"{API_BASE}/sources", params={"limit": 100}, timeout=TIMEOUT)
+        resp = requests.get(f"{API_BASE}/sources", params={"limit": 100}, headers=HEADERS, timeout=TIMEOUT)
         resp.raise_for_status()
         data = resp.json()
+        print(f"[INFO] API 返回: success={data.get('success')}, 数据量={len(data.get('data', []))}")
         if data.get("success"):
             return data.get("data", [])
     except Exception as e:
