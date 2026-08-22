@@ -342,12 +342,20 @@ def main():
     def check_one(idx_r):
         idx, r = idx_r
         link = r.get("link", "")
+        source_status = r.get("_source_status", "")
         if link:
             health = check_site_health(link)
-            # 备选判断：如果健康检查失败但 ziyuanzu 自带状态为 ok，标记为在线
-            if not health.get("is_alive") and r.get("_source_status") == "ok":
-                health["is_alive"] = True
-                health["error"] = f"在线（ziyuanzu 备选确认，原检测: {health.get('error') or health.get('status_code')}）"
+            # ziyuanzu 状态优先：ziyuanzu 说在线 → 一定在线（UptimeRobot 多地域检测更可靠）
+            if source_status == "ok":
+                if not health.get("is_alive"):
+                    health["is_alive"] = True
+                    health["error"] = f"在线（ziyuanzu 确认，本地检测: {health.get('error') or health.get('status_code')}）"
+            # ziyuanzu 说离线，但我们检测在线 → 站点已恢复，ziyuanzu 尚未更新
+            elif source_status == "down":
+                if health.get("is_alive"):
+                    health["error"] = f"在线（本地检测恢复，ziyuanzu 仍显示 down）"
+                else:
+                    health["is_alive"] = False
             r["health"] = health
             return idx, r, health
         else:
