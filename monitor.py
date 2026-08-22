@@ -17,6 +17,26 @@ from urllib.parse import urljoin
 
 import requests
 
+try:
+    from pypinyin import lazy_pinyin
+    HAS_PINYIN = True
+except ImportError:
+    HAS_PINYIN = False
+
+
+def generate_slug(name: str) -> str:
+    """将资源站名称转换为 URL slug（拼音）"""
+    if not HAS_PINYIN:
+        return None
+    parts = []
+    for char in name:
+        if '\u4e00' <= char <= '\u9fff':
+            parts.extend(lazy_pinyin(char))
+        else:
+            parts.append(char)
+    return ''.join(parts).lower()
+
+
 # 使用 ziyuanzu.com API 获取数据（而非 HTML 抓取）
 API_BASE = "https://www.ziyuanzu.com/api/v1"
 BASE_URL = "https://www.ziyuanzu.com"
@@ -246,7 +266,7 @@ def generate_html(data: dict, output_path: str):
         html += f"""
     <tr>
       <td>{idx}</td>
-      <td><a class="resource-name" href="{r.get('link', '#')}" target="_blank" rel="noopener">{r.get('name', '未知')}</a></td>
+      <td><a class="resource-name" href="{r.get('source_url', r.get('link', '#'))}" target="_blank" rel="noopener">{r.get('name', '未知')}</a></td>
       <td class="resource-desc">{r.get('description', '')}</td>
       <td>{badge}</td>
       <td>{status_code}</td>
@@ -294,9 +314,13 @@ def main():
     # 2. 转换为统一格式
     resources = []
     for r in api_resources:
+        name = r.get("name", "未知")
+        slug = generate_slug(name)
+        source_url = f"{BASE_URL}/source/{slug}" if slug else r.get("url", "")
         resources.append({
-            "name": r.get("name", "未知"),
+            "name": name,
             "link": r.get("url", ""),
+            "source_url": source_url,
             "api": r.get("api", ""),
             "description": r.get("description", ""),
             "status": r.get("status", "未知"),
