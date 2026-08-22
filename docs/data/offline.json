@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-22 18:22:52",
+  "timestamp": "2026-08-22 18:27:29",
   "total": 13,
   "data": [
     {
@@ -23,7 +23,7 @@
       "health": {
         "url": "https://www.mdzyapi.com",
         "status_code": 502,
-        "response_time_ms": 385.95,
+        "response_time_ms": 210.11,
         "is_alive": false,
         "error": null
       }
