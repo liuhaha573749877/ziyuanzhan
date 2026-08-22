@@ -156,8 +156,8 @@ def generate_html(data: dict, output_path: str):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>资源站监测 - ziyuanzu.com 资源站实时监控</title>
-<meta name="description" content="ziyuanzu.com 资源站实时监测面板，共监测{total}个资源站，在线{alive}个，离线{dead}个。更新时间：{now}">
+<title>资源站监测 - www.ziyuanzu.com 资源站实时监控</title>
+<meta name="description" content="www.ziyuanzu.com 资源站实时监测面板，共监测{total}个资源站，在线{alive}个，离线{dead}个。更新时间：{now}">
 <meta name="keywords" content="资源组, ziyuanzu, 影视资源站, 采集站监测, 资源站监控, 播放源检测">
 <style>
   :root {{
@@ -208,7 +208,7 @@ def generate_html(data: dict, output_path: str):
 <div class="container">
 <header>
   <h1>资源站监测</h1>
-  <p class="subtitle">ziyuanzu.com 资源站实时监控面板</p>
+  <p class="subtitle"><a href="https://www.ziyuanzu.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px dotted;">www.ziyuanzu.com</a> 资源站实时监控面板</p>
   <p class="update-time">更新时间：{now}</p>
 </header>
 <div class="stats-grid">
@@ -259,8 +259,8 @@ def generate_html(data: dict, output_path: str):
   </tbody>
 </table>
 <div class="footer">
-  <p>数据来源：<a href="https://www.ziyuanzu.com/" target="_blank" rel="noopener">ziyuanzu.com</a> | 监测脚本自动运行</p>
-  <p style="margin-top:0.5rem;">本项目为第三方监测工具，与 ziyuanzu.com 官方无关</p>
+  <p>数据来源：<a href="https://www.ziyuanzu.com/" target="_blank" rel="noopener">www.ziyuanzu.com</a> | 监测脚本自动运行</p>
+  <p style="margin-top:0.5rem;">本项目为第三方监测工具，与 www.ziyuanzu.com 官方无关</p>
 </div>
 </div>
 </body>
