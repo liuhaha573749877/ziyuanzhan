@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-08-22 02:39:31",
-  "total": 15,
+  "timestamp": "2026-08-22 02:42:05",
+  "total": 13,
   "data": [
     {
       "name": "魔都资源站",
@@ -23,7 +23,7 @@
       "health": {
         "url": "https://www.mdzyapi.com",
         "status_code": 502,
-        "response_time_ms": 546.51,
+        "response_time_ms": 3290.92,
         "is_alive": false,
         "error": null
       }
@@ -237,32 +237,6 @@
       }
     },
     {
-      "name": "红牛资源站",
-      "link": "https://api.hnzy2.com",
-      "source_url": "https://www.ziyuanzu.com/source/hongniuziyuanzhan",
-      "api": "https://api.hnzy2.com/api.php/provide/vod",
-      "description": "红牛资源采集站，提供影视资源API接口",
-      "status": "down",
-      "uptime": "-",
-      "resource_count": 0,
-      "rating": 4,
-      "tags": [
-        "影视资源",
-        "采集站",
-        "API"
-      ],
-      "speed": "medium",
-      "responseTime": 978,
-      "todayUpdates": 0,
-      "health": {
-        "url": "https://api.hnzy2.com",
-        "status_code": null,
-        "response_time_ms": null,
-        "is_alive": false,
-        "error": "Connection Error"
-      }
-    },
-    {
       "name": "量子资源站",
       "link": "https://api.lzizy.com",
       "source_url": "https://www.ziyuanzu.com/source/liangziziyuanzhan",
@@ -282,32 +256,6 @@
       "todayUpdates": 0,
       "health": {
         "url": "https://api.lzizy.com",
-        "status_code": null,
-        "response_time_ms": null,
-        "is_alive": false,
-        "error": "Connection Error"
-      }
-    },
-    {
-      "name": "金鹰资源站",
-      "link": "https://api.jyzy.com",
-      "source_url": "https://www.ziyuanzu.com/source/jinyingziyuanzhan",
-      "api": "https://api.jyzy.com/api.php/provide/vod",
-      "description": "金鹰资源采集站，提供影视资源API接口",
-      "status": "down",
-      "uptime": "-",
-      "resource_count": 0,
-      "rating": 4,
-      "tags": [
-        "影视资源",
-        "采集站",
-        "API"
-      ],
-      "speed": "medium",
-      "responseTime": 1268,
-      "todayUpdates": 0,
-      "health": {
-        "url": "https://api.jyzy.com",
         "status_code": null,
         "response_time_ms": null,
         "is_alive": false,

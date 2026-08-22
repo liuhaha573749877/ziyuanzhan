@@ -1,26 +1,26 @@
 {
-  "timestamp": "2026-08-22 02:39:31",
+  "timestamp": "2026-08-22 02:42:05",
   "overview": {
-    "total": 77,
-    "alive": 62,
-    "offline": 15,
-    "onlineRate": 80.5
+    "total": 74,
+    "alive": 61,
+    "offline": 13,
+    "onlineRate": 82.4
   },
   "responseTime": {
-    "avg": 633.6,
-    "min": 118.2,
-    "max": 3164.18,
-    "median": 543.14
+    "avg": 746.7,
+    "min": 84.21,
+    "max": 3316.78,
+    "median": 595.48
   },
   "ratingDistribution": {
     "4.5-5.0": 11,
-    "4.0-4.5": 66,
+    "4.0-4.5": 63,
     "3.5-4.0": 0,
     "3.0-3.5": 0,
     "below-3.0": 0
   },
   "speedDistribution": {
-    "medium": 50,
+    "medium": 47,
     "fast": 17,
     "slow": 10
   }
