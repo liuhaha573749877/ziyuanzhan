@@ -20,7 +20,7 @@ import requests
 # 使用 ziyuanzu.com API 获取数据（而非 HTML 抓取）
 API_BASE = "https://www.ziyuanzu.com/api/v1"
 BASE_URL = "https://www.ziyuanzu.com"
-TIMEOUT = 8
+TIMEOUT = 15
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -127,7 +127,10 @@ def check_site_health(url: str) -> dict:
         elapsed = (time.time() - start) * 1000
         result["status_code"] = resp.status_code
         result["response_time_ms"] = round(elapsed, 2)
-        result["is_alive"] = resp.status_code < 400
+        # 403/401 视为在线（服务器有响应，只是拒绝了请求，可能是 WAF/Cloudflare 拦截）
+        result["is_alive"] = resp.status_code < 400 or resp.status_code in (401, 403)
+        if resp.status_code in (401, 403):
+            result["error"] = f"HTTP {resp.status_code} (在线但受限)"
     except requests.exceptions.Timeout:
         result["error"] = "Timeout"
     except requests.exceptions.ConnectionError:
@@ -304,6 +307,8 @@ def main():
             "speed": r.get("speed", "-"),
             "responseTime": r.get("responseTime", "-"),
             "todayUpdates": r.get("todayUpdates", 0),
+            "_source_status": r.get("status", ""),
+            "_source_uptime": r.get("uptime", 0),
         })
 
     # 3. 并发检测每个资源站的健康状态
@@ -315,6 +320,10 @@ def main():
         link = r.get("link", "")
         if link:
             health = check_site_health(link)
+            # 备选判断：如果健康检查失败但 ziyuanzu 自带状态为 ok，标记为在线
+            if not health.get("is_alive") and r.get("_source_status") == "ok":
+                health["is_alive"] = True
+                health["error"] = f"在线（ziyuanzu 备选确认，原检测: {health.get('error') or health.get('status_code')}）"
             r["health"] = health
             return idx, r, health
         else:
@@ -328,7 +337,12 @@ def main():
             status = "在线" if health.get("is_alive") else "离线"
             print(f"  [{idx+1}/{len(resources)}] {r.get('name', '未知')}: {status} ({health.get('status_code') or health.get('error')})")
 
-    # 4. 生成数据
+    # 4. 清理内部字段
+    for r in resources:
+        r.pop("_source_status", None)
+        r.pop("_source_uptime", None)
+
+    # 5. 生成数据
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     alive_count = sum(1 for r in resources if r.get("health", {}).get("is_alive", False))
     resp_times = [r["health"]["response_time_ms"] for r in resources
