@@ -311,6 +311,24 @@ def main():
     api_resources = fetch_resources_from_api()
     print(f"[INFO] 获取到 {len(api_resources)} 个资源站")
 
+    # 去重：同名资源站保留在线的（status=ok 或 uptime 更高）
+    seen = {}
+    for r in api_resources:
+        name = r.get("name", "未知")
+        if name not in seen:
+            seen[name] = r
+        else:
+            existing = seen[name]
+            # 优先保留 status=ok 的
+            if r.get("status") == "ok" and existing.get("status") != "ok":
+                seen[name] = r
+            # 都 ok 则保留 uptime 更高的
+            elif r.get("status") == existing.get("status"):
+                if r.get("uptime", 0) > existing.get("uptime", 0):
+                    seen[name] = r
+    api_resources = list(seen.values())
+    print(f"[INFO] 去重后 {len(api_resources)} 个资源站")
+
     # 2. 转换为统一格式
     resources = []
     for r in api_resources:
