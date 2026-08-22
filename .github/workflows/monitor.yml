@@ -11,6 +11,7 @@ on:
     paths:
       - 'monitor.py'
       - 'requirements.txt'
+      - 'docs/data/sources.json'
 
 permissions:
   contents: write

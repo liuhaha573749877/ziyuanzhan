@@ -34,7 +34,20 @@ HEADERS = {
 
 
 def fetch_resources_from_api() -> list[dict]:
-    """通过 ziyuanzu.com API 获取资源站列表"""
+    """获取资源站列表：优先读取本地 sources.json（避免 GitHub Actions IP 被 Cloudflare 403）"""
+    # 1. 优先读取本地静态数据文件
+    local_file = os.path.join(os.path.dirname(__file__), "docs", "data", "sources.json")
+    if os.path.exists(local_file):
+        try:
+            with open(local_file, "r", encoding="utf-8") as f:
+                resources = json.load(f)
+            if resources:
+                print(f"[INFO] 从本地 sources.json 加载 {len(resources)} 个资源站")
+                return resources
+        except Exception as e:
+            print(f"[ERROR] 读取本地 sources.json 失败: {e}")
+
+    # 2. 尝试通过 API 获取（本地开发环境可用）
     try:
         resp = requests.get(f"{API_BASE}/sources", params={"limit": 100}, headers=HEADERS, timeout=TIMEOUT)
         resp.raise_for_status()
@@ -45,7 +58,7 @@ def fetch_resources_from_api() -> list[dict]:
     except Exception as e:
         print(f"[ERROR] API 请求失败: {e}")
 
-    # 备选：尝试直接抓取首页 HTML 解析
+    # 3. 备选：尝试直接抓取首页 HTML 解析
     print("[WARN] API 不可用，回退到 HTML 抓取...")
     return fetch_resources_from_html()
 
