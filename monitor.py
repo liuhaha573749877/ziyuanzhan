@@ -338,8 +338,8 @@ def main():
     # 5. 生成全部静态文件
     print("\n[3/4] 生成静态 JSON + HTML 文件...")
     generate_html(data, "docs/index.html")
-    save_json(data, f"data/monitor_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
-    save_json(data, "data/latest.json")
+    save_json(data, f"docs/data/monitor_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
+    save_json(data, "docs/data/latest.json")
 
     # 生成分类 JSON（供 AI Agent / MCP 直接 fetch）
     online_list = [r for r in resources if r.get("health", {}).get("is_alive", False)]
@@ -349,13 +349,13 @@ def main():
         "timestamp": timestamp,
         "total": len(online_list),
         "data": online_list,
-    }, "data/online.json")
+    }, "docs/data/online.json")
 
     save_json({
         "timestamp": timestamp,
         "total": len(offline_list),
         "data": offline_list,
-    }, "data/offline.json")
+    }, "docs/data/offline.json")
 
     # 统计数据
     ratings = [r.get("rating", 0) for r in resources if isinstance(r.get("rating"), (int, float))]
@@ -386,7 +386,7 @@ def main():
             "below-3.0": sum(1 for r in ratings if r < 3.0),
         },
         "speedDistribution": speed_dist,
-    }, "data/stats.json")
+    }, "docs/data/stats.json")
 
     # 最快资源站
     fastest = sorted(
@@ -397,7 +397,7 @@ def main():
         "timestamp": timestamp,
         "total": len(fastest),
         "data": fastest,
-    }, "data/fastest.json")
+    }, "docs/data/fastest.json")
 
     # 高评分资源站
     top_rated = sorted(
@@ -409,7 +409,7 @@ def main():
         "timestamp": timestamp,
         "total": len(top_rated),
         "data": top_rated,
-    }, "data/top-rated.json")
+    }, "docs/data/top-rated.json")
 
     print("\n[4/4] 完成！")
     print("=" * 50)

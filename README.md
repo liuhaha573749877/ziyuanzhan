@@ -50,7 +50,7 @@ python monitor.py
 
 生成的文件：
 - `docs/index.html` — 监控面板
-- `data/*.json` — 各类 JSON 数据
+- `docs/data/*.json` — 各类 JSON 数据
 
 ## 项目结构
 
@@ -60,16 +60,16 @@ ziyuanzhan/
 ├── requirements.txt         # Python 依赖
 ├── .github/workflows/
 │   └── monitor.yml          # GitHub Actions 定时监控 + 部署
-├── docs/
-│   └── index.html           # 静态监控面板（GitHub Pages 根目录）
-└── data/
-    ├── latest.json          # 全部数据
-    ├── online.json          # 在线资源站
-    ├── offline.json         # 离线资源站
-    ├── stats.json           # 统计数据
-    ├── fastest.json         # 最快资源站
-    ├── top-rated.json       # 高评分资源站
-    └── monitor_*.json       # 历史快照
+└── docs/                    # GitHub Pages 根目录
+    ├── index.html           # 静态监控面板
+    └── data/
+        ├── latest.json      # 全部数据
+        ├── online.json      # 在线资源站
+        ├── offline.json     # 离线资源站
+        ├── stats.json       # 统计数据
+        ├── fastest.json     # 最快资源站
+        ├── top-rated.json   # 高评分资源站
+        └── monitor_*.json   # 历史快照
 ```
 
 ## 数据来源
