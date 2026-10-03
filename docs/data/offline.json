@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-02 21:40:40",
+  "timestamp": "2026-10-03 03:12:36",
   "total": 13,
   "data": [
     {
@@ -129,7 +129,7 @@
         "status_code": null,
         "response_time_ms": null,
         "is_alive": false,
-        "error": "Timeout"
+        "error": "Connection Error"
       }
     },
     {
